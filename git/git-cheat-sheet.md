@@ -1,4 +1,4 @@
-> 参考：
+> git参考：
 >
 > https://cntofu.com/book/149/readme.html
 
@@ -162,22 +162,29 @@ git commit --amend --date="date"
 
 ##### 把当前分支中未提交的修改移动到其他分支：
 
-```
+```bash
+# 暂存改动内容
 git stash
+# 切换到branch2分支
 git checkout branch2
+# 将暂存的内容取出
 git stash pop
+# 查看暂存列表
+git stash list
+
+# 删除暂存内容
+git stash drop #默认删除最近1次缓存内容，等价于git stash drop stash@{0}
+# 指定删除暂存内容
+git stash drop stash@{1}
+# 删除所有暂存内容
+git stash clear
+
 ```
 
 ##### 将 stashed changes 应用到当前分支：
 
 ```
 git stash apply
-```
-
-##### 删除最新一次的 stashed changes：
-
-```
-git stash drop
 ```
 
 ## 5、搜索
@@ -366,7 +373,7 @@ $ git push remote <remote> <branch>
 
 ##### 删除远程端分支：
 
-```
+```bash
 $ git push <remote> :<branch> (since Git v1.5.0)
 or
 git push <remote> --delete <branch> (since Git v1.7.0)
@@ -392,20 +399,28 @@ $ git merge <branch>
 
 *请勿重置已发布的提交!*
 
-```
+```bash
 $ git rebase <branch>
-```
 
-##### 退出重置:
+# 编辑近3条记录
+git rebase -i HEAD~3 
+# 编辑第一条记录
+git rebase -i --root
 
-```
-$ git rebase --abort
-```
+# pick 不改变提交记录
+# r 不改变提交内容，只改变提交msg
+# e 可以编辑内容和msg
+# s 合并提交
+# f 合并提交，只保留最前面的提交msg
 
-##### 解决冲突后继续重置：
-
-```
-$ git rebase --continue
+# 继续编辑
+git rebase --edit-todo
+# 继续rebase
+git rebase --continue
+# 放弃当前或上次rebase
+git rebase --abort
+# 提交修正内容，跟rebase 的edit一起用
+git commit --amend
 ```
 
 ##### 使用配置好的merge tool 解决冲突：
