@@ -44,3 +44,4 @@ sum(increase(http_server_requests_seconds_sum{app="$app", exception="None",statu
 # 单条线的平均 avg_over_time
 count(avg_over_time(backtest_strategy_summary{application="backtest"}[1h])>1000)
 ```
+
